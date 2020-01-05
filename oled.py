@@ -2,26 +2,27 @@
 
 import OLED_Driver as OLED
 import RPi.GPIO as GPIO
-from PIL import Image, ImageColor, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 from time import sleep
 import netifaces as ni
 from datetime import datetime
 
-gpsgreen = Image.open("/opt/pi-oled/gps-green.jpg")
-gpsyellow = Image.open("/opt/pi-oled/gps-yellow.jpg")
-gpsred = Image.open("/opt/pi-oled/gps-red.jpg")
-tempgreen = Image.open("/opt/pi-oled/temp-green.jpg")
-fangreen = Image.open("/opt/pi-oled/fan-green.jpg")
-hotspotgreen = Image.open("/opt/pi-oled/hotspot-green.jpg")
-hotspotgrey = Image.open("/opt/pi-oled/hotspot-grey.jpg")
-timegreen = Image.open("/opt/pi-oled/time-grey.jpg")
+gpsgreen = Image.open("/opt/pi-oled/images/gps-green.jpg")
+gpsyellow = Image.open("/opt/pi-oled/images/gps-yellow.jpg")
+gpsred = Image.open("/opt/pi-oled/images/gps-red.jpg")
+tempgreen = Image.open("/opt/pi-oled/images/temp-green.jpg")
+fangreen = Image.open("/opt/pi-oled/images/fan-green.jpg")
+hotspotgreen = Image.open("/opt/pi-oled/images/hotspot-green.jpg")
+hotspotgrey = Image.open("/opt/pi-oled/images/hotspot-grey.jpg")
+timegreen = Image.open("/opt/pi-oled/images/time-grey.jpg")
 
-font20 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 20)
-font16 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 16)
-font14 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 14)
-font11 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 11)
-font12 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 12)
-font8 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 9)
+font20 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 20)
+font16 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 16)
+font14 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 14)
+font11 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 11)
+font12 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 12)
+font8 = ImageFont.truetype('/opt/pi-oled/fonts/notomono.ttf', 9)
+
 
 def getips():
     try:
@@ -60,34 +61,10 @@ def gps_status():
             elif gpssplit[0] == 'maiden':
                 gpsmaiden = gpssplit[1]
                 draw.text((5, 50), gpsmaiden, fill="GREEN", font=font14)
-                OLED.Display_Image(image)                
+                OLED.Display_Image(image)
             else:
-                 pass
+                pass
             gpsdata = gpsfile.readline()
-
-
-def Test_Text():
-    image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
-    draw = ImageDraw.Draw(image)
-    gpsgreen = Image.open("gps-green.jpg")
-    gpsyellow = Image.open("gps-yellow.jpg")
-    gpsred = Image.open("gps-red.jpg")
-    image.paste(gpsgreen, (10, 0))
-    image.paste(gpsyellow, (40, 0))
-    image.paste(gpsred, (70, 0))
-    font1 = ImageFont.truetype('notomono.ttf', 20)
-    font2 = ImageFont.truetype('notomono.ttf', 14)
-
-    #draw.text((0, 12), 'WaveShare', fill="BLUE", font=font1)
-    # OLED.Display_Image(image)
-    #draw.text((0, 36), 'Electronic', fill="BLUE", font=font)
-    #draw.text((20, 72), '1.5 inch', fill="CYAN", font=font)
-    #draw.text((10, 96), 'R', fill="RED", font=font)
-    #draw.text((25, 96), 'G', fill="GREEN", font=font)
-    #draw.text((40, 96), 'B', fill="BLUE", font=font)
-    draw.text((55, 96), 'sample', fill="GREY", font=font2)
-
-    OLED.Display_Image(image)
 
 
 OLED.Device_Init()
@@ -104,7 +81,7 @@ try:
     OLED.Display_Image(image)
     getips()
     print('sleeping')
-    sleep(60) 
+    sleep(60)
 except:
     print("\r\nEnd")
     OLED.Clear_Screen()
