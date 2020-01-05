@@ -15,9 +15,9 @@ def Test_Text():
     gpsgreen = Image.open("gps-green.jpg")
     gpsyellow = Image.open("gps-yellow.jpg")
     gpsred = Image.open("gps-red.jpg")
-    image.paste(gpsgreen, (0, 10))
-    image.paste(gpsyellow, (0, 40))
-    image.paste(gpsred, (0, 70))
+    image.paste(gpsgreen, (10, 0))
+    image.paste(gpsyellow, (40, 0))
+    image.paste(gpsred, (70, 0))
     font1 = ImageFont.truetype('notomono.ttf', 20)
     font2 = ImageFont.truetype('notomono.ttf', 14)
 
