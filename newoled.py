@@ -31,9 +31,11 @@ def make_font(name, size):
 
 def main():
     device = get_display()
-    font = make_font("notomono.ttf", 14)
+    noto = make_font("notomono.ttf", 14)
+    fa = make_font("notomono.ttf", 20)
     with canvas(device) as draw:
-        draw.text((50, 50), text="hello world", font=font, fill="white")
+        draw.text((50, 0), text="hello world", font=noto, fill="white")
+        draw.text((50, 0), text="\uf3c5", font=fa, fill="green")
     sleep(30)
 
 if __name__ == "__main__":
