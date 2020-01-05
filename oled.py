@@ -71,9 +71,9 @@ def hotspot():
 
 
 OLED.Device_Init()
-image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
 try:
     while True:
+        image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
         draw = ImageDraw.Draw(image)
         gps_status()
         image.paste(tempgreen, (115, 0))
