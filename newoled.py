@@ -1,10 +1,18 @@
+import os
+from datetime import datetime
+from time import sleep
+
+from loguru import logger as log
+from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
-from luma.core import cmdline, error
-from loguru import logger as log
-import os
-from time import sleep
-from datetime import datetime
+
+noto14 = make_font("notomono.ttf", 14)
+noto16 = make_font("notomono.ttf", 16)
+noto20 = make_font("notomono.ttf", 20)
+fas = make_font("fa-solid-900.ttf", 25)
+fab = make_font("fa-brands-400.ttf", 25)
+far = make_font("fa-regular-400.ttf", 25)
 
 
 def get_display():
@@ -32,19 +40,36 @@ def make_font(name, size):
 def main():
     device = get_display()
     while True:
-        noto14 = make_font("notomono.ttf", 14)
-        noto16 = make_font("notomono.ttf", 16)
-        noto20 = make_font("notomono.ttf", 20)
-        fas = make_font("fa-solid-900.ttf", 25)
-        fab = make_font("fa-brands-400.ttf", 25)
-        far = make_font("fa-regular-400.ttf", 25)
         with canvas(device) as draw:
-            draw.text((0, 0), text="\uf3c5", font=fas, fill="green")
+            with open("/dev/shm/gps") as gpsfile:
+                gpsdata = gpsfile.readline()
+                while gpsdata:
+                    gpssplit = gpsdata.strip('\n').split('=')
+                    if gpssplit[0] == 'fix':
+                        gpsfix = gpssplit[1]
+                        if gpsfix == 'No GPS':
+                            fcolor = "red"
+                        elif gpsfix == 'No Fix':
+                            fcolor = "yellow"
+                        elif gpsfix == '2D Fix' or gpsfix == '3D Fix':
+                            fcolor = "green"
+                        else:
+                            fcolor = "grey"
+                        draw.text((0, 0), text="\uf3c5", font=fas, fill=fcolor)
+                    elif gpssplit[0] == 'maiden':
+                        gpsmaiden = gpssplit[1]
+                        draw.text((0, 50), text=f"  {gpsmaiden}", font=noto16, fill="yellow")
+                    else:
+                        pass
+                    gpsdata = gpsfile.readline()
+
+
             draw.text((30, 0), text="\uf017", font=far, fill="green")
             draw.text((68, 0), text="\uf863", font=fas, fill="green")
             draw.text((105, 0), text="\uf2ca", font=fas, fill="green")
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         sleep(1)
+
 
 if __name__ == "__main__":
     try:
