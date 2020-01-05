@@ -11,7 +11,7 @@ def make_font(name, size):
     font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
     return ImageFont.truetype(font_path, size)
 
-
+noto12 = make_font("notomono.ttf", 12)
 noto14 = make_font("notomono.ttf", 14)
 noto16 = make_font("notomono.ttf", 16)
 noto20 = make_font("notomono.ttf", 20)
@@ -72,8 +72,8 @@ def main():
                 eip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
             except:
                 eip = "No Address"
-            draw.text((0, 116), text=f"wlan: {wip}", font=noto14, fill="orange")
-            draw.text((0, 112), text=f"eth: {eip}", font=noto14, fill="orange")
+            draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
+            draw.text((0, 105), text=f"eth: {eip}", font=noto12, fill="orange")
 
 
             draw.text((30, 0), text="\uf017", font=far, fill="green")
