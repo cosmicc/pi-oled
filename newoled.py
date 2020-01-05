@@ -84,11 +84,19 @@ def main():
                 eip = "No Address"
             draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
             draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
+            # TEMP DATA
+            with open("/dev/shm/cputemp") as tempfile:
+                tempdata = int(tempfile.readline())
+            if tempdata < 60:
+                fcolor = "green"
+            elif tempdata > 70:
+                fcolor = "red"
+            else:
+                fcolor = "yellow"
+            draw.text((105, 0), text="\uf2ca", font=fas, fill=fcolor)
 
 
             draw.text((30, 0), text="\uf017", font=far, fill="grey")
-
-            draw.text((105, 0), text="\uf2ca", font=fas, fill="green")
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         sleep(1)
 
