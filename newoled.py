@@ -41,6 +41,7 @@ def main():
     device = get_display()
     while True:
         with canvas(device) as draw:
+            # GPS DATA
             with open("/dev/shm/gps") as gpsfile:
                 gpsdata = gpsfile.readline()
                 while gpsdata:
@@ -62,6 +63,17 @@ def main():
                     else:
                         pass
                     gpsdata = gpsfile.readline()
+            # NTP DATA
+            try:
+                wip = ni.ifaddresses('wlan1')[ni.AF_INET][0]['addr']
+            except:
+                wip = "No Address"
+            try:
+                eip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+            except:
+                eip = "No Address"
+            draw.text((0, 116), text=f"wlan: {wip}", font=noto14, fill="orange")
+            draw.text((0, 112), text=f"eth: {eip}", font=noto14, fill="orange")
 
 
             draw.text((30, 0), text="\uf017", font=far, fill="green")
