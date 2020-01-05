@@ -16,7 +16,7 @@ def Test_Text():
     font2 = ImageFont.truetype('notomono.ttf', 14)
 
     draw.text((0, 12), 'WaveShare', fill="BLUE", font=font1)
-
+    OLED.Display_Image(image)
     #draw.text((0, 36), 'Electronic', fill="BLUE", font=font)
     #draw.text((20, 72), '1.5 inch', fill="CYAN", font=font)
     #draw.text((10, 96), 'R', fill="RED", font=font)
@@ -34,6 +34,7 @@ try:
 
         #-------------OLED Init------------#
         OLED.Device_Init()
+        print(dir(draw))
         Test_Text()
 
     if __name__ == '__main__':
