@@ -96,7 +96,7 @@ def main():
             draw.text((105, 0), text="\uf2ca", font=fas, fill=fcolor)
 
 
-            draw.text((30, 0), text="\uf017", font=far, fill="grey")
+            draw.text((30, 0), text="\uf017", font=far, fill="dimgray")
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         sleep(1)
 
