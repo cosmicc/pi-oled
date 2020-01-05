@@ -2,10 +2,12 @@ import os
 from datetime import datetime
 from time import sleep
 
+import netifaces as ni
 from loguru import logger as log
 from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
+
 
 def make_font(name, size):
     font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
@@ -72,7 +74,7 @@ def main():
                 eip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
             except:
                 eip = "No Address"
-            draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
+            draw.text((0, 117), text=f"wlan: {wip}", font=noto12, fill="orange")
             draw.text((0, 105), text=f"eth: {eip}", font=noto12, fill="orange")
 
 
