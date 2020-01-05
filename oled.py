@@ -35,7 +35,6 @@ def getips():
         eip = "No Address"
     draw.text((0, 116), f'wlan: {wip}', fill="YELLOW", font=font11)
     draw.text((0, 102), f'eth: {eip}', fill="YELLOW", font=font11)
-    OLED.Display_Image(image)
 
 
 def gps_status():
@@ -48,20 +47,15 @@ def gps_status():
                 gpsfix = gpssplit[1]
                 if gpsfix == 'No GPS':
                     image.paste(gpsred, (5, 0))
-                    OLED.Display_Image(image)
                 elif gpsfix == 'No Fix':
                     image.paste(gpsyellow, (5, 0))
-                    OLED.Display_Image(image)
                 elif gpsfix == '2D Fix' or gpsfix == '3D Fix':
                     image.paste(timegreen, (5, 0))
-                    OLED.Display_Image(image)
                 else:
                     image.paste(gpsred, (5, 0))
-                    OLED.Display_Image(image)
             elif gpssplit[0] == 'maiden':
                 gpsmaiden = gpssplit[1]
                 draw.text((5, 50), gpsmaiden, fill="GREEN", font=font14)
-                OLED.Display_Image(image)
             else:
                 pass
             gpsdata = gpsfile.readline()
@@ -69,7 +63,6 @@ def gps_status():
 
 def gettime():
     draw.text((0, 26), f' {datetime.now().strftime("%H:%M:%S")}', fill="WHITE", font=font20)
-    OLED.Display_Image(image)
 
 
 def hotspot():
@@ -79,20 +72,20 @@ def hotspot():
 
 OLED.Device_Init()
 image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
-draw = ImageDraw.Draw(image)
-# Test_Text()
 try:
     while True:
+        draw = ImageDraw.Draw(image)
         gps_status()
         image.paste(tempgreen, (115, 0))
         image.paste(fangreen, (80, 2))
         image.paste(hotspotgrey, (45, 2))
-        OLED.Display_Image(image)
         getips()
         hotspot()
-        for each in range(10):
-            gettime()
-            sleep(1)
+        gettime()
+        # OLED.Clear_Screen()
+        OLED.Display_Image(image)
+
+        sleep(1)
 except:
     print("\r\nEnd")
     OLED.Clear_Screen()
