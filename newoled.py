@@ -65,14 +65,14 @@ def main():
                     else:
                         pass
                     gpsdata = gpsfile.readline()
-            # FAN DATA
-            with open("/dev/shm/fan") as fanfile:
-                fandata = fanfile.readline()
-            if fandata:
+            # HOTSPOT DATA
+            with open("/dev/shm/hotspot") as hsfile:
+                hsdata = hsfile.readline()
+            if hsdata:
                 fcolor = "green"
             else:
                 fcolor = "grey"
-            draw.text((68, 0), text="\uf863", font=fas, fill=fcolor)
+            draw.text((68, 0), text="\uf1eb", font=fas, fill=fcolor)
             # IP DATA
             try:
                 wip = ni.ifaddresses('wlan1')[ni.AF_INET][0]['addr']
