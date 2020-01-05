@@ -72,7 +72,7 @@ def main():
                 fcolor = "green"
             else:
                 fcolor = "grey"
-            draw.text((30, 0), text="\uf017", font=far, fill=fcolor)
+            draw.text((68, 0), text="\uf863", font=fas, fill=fcolor)
             # IP DATA
             try:
                 wip = ni.ifaddresses('wlan1')[ni.AF_INET][0]['addr']
@@ -86,8 +86,8 @@ def main():
             draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
 
 
+            draw.text((30, 0), text="\uf017", font=far, fill="grey")
 
-            draw.text((68, 0), text="\uf863", font=fas, fill="green")
             draw.text((105, 0), text="\uf2ca", font=fas, fill="green")
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         sleep(1)
