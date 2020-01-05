@@ -67,21 +67,32 @@ def gps_status():
             gpsdata = gpsfile.readline()
 
 
+def gettime():
+    draw.text((0, 26), f' {datetime.now().strftime("%H:%M:%S")}', fill="WHITE", font=font20)
+    OLED.Display_Image(image)
+
+
+def hotspot():
+    draw.text((0, 85), f'Hotspot Clients: 4', fill="CYAN", font=font12)
+    OLED.Display_Image(image)
+
+
 OLED.Device_Init()
 image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
 draw = ImageDraw.Draw(image)
 # Test_Text()
 try:
-    gps_status()
-    image.paste(tempgreen, (115, 0))
-    image.paste(fangreen, (80, 2))
-    image.paste(hotspotgrey, (45, 2))
-    draw.text((0, 85), f'Hotspot Clients: 4', fill="CYAN", font=font12)
-    draw.text((0, 26), f' {datetime.now().strftime("%H:%M:%S")}', fill="WHITE", font=font20)
-    OLED.Display_Image(image)
-    getips()
-    print('sleeping')
-    sleep(60)
+    while True:
+        gps_status()
+        image.paste(tempgreen, (115, 0))
+        image.paste(fangreen, (80, 2))
+        image.paste(hotspotgrey, (45, 2))
+        OLED.Display_Image(image)
+        getips()
+        hotspot()
+        for each in range(10):
+            gettime()
+            sleep(1)
 except:
     print("\r\nEnd")
     OLED.Clear_Screen()
