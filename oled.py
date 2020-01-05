@@ -1,20 +1,18 @@
 # -*- coding:UTF-8 -*-
 
+import OLED_Driver as OLED
 #--------------Driver Library-----------------#
 import RPi.GPIO as GPIO
-import OLED_Driver as OLED
 #--------------Image Library---------------#
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
-from PIL import ImageColor
+from PIL import Image, ImageColor, ImageDraw, ImageFont
+
 #-------------Test Display Functions---------------#
 
 
 def Test_Text():
     image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype('cambriab.ttf', 24)
+    font = ImageFont.truetype('notomono.ttf', 24)
 
     draw.text((0, 12), 'WaveShare', fill="BLUE", font=font)
     draw.text((0, 36), 'Electronic', fill="BLUE", font=font)
@@ -43,5 +41,3 @@ except:
     print("\r\nEnd")
     OLED.Clear_Screen()
     GPIO.cleanup()
-
-
