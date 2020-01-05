@@ -1,12 +1,8 @@
 # -*- coding:UTF-8 -*-
 
 import OLED_Driver as OLED
-#--------------Driver Library-----------------#
 import RPi.GPIO as GPIO
-#--------------Image Library---------------#
 from PIL import Image, ImageColor, ImageDraw, ImageFont
-
-#-------------Test Display Functions---------------#
 
 
 def Test_Text():
@@ -33,14 +29,13 @@ def Test_Text():
     OLED.Display_Image(image)
 
 
-#----------------------MAIN-------------------------#
 try:
-
     def main():
-
-        #-------------OLED Init------------#
         OLED.Device_Init()
         Test_Text()
+        OLED.Delay(60)
+        OLED.Clear_Screen()
+        GPIO.cleanup()
 
     if __name__ == '__main__':
         main()
