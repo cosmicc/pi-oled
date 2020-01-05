@@ -7,6 +7,11 @@ from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
 
+def make_font(name, size):
+    font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
+    return ImageFont.truetype(font_path, size)
+
+
 noto14 = make_font("notomono.ttf", 14)
 noto16 = make_font("notomono.ttf", 16)
 noto20 = make_font("notomono.ttf", 20)
@@ -30,11 +35,6 @@ def get_display():
         exit(1)
     else:
         return device
-
-
-def make_font(name, size):
-    font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
-    return ImageFont.truetype(font_path, size)
 
 
 def main():
