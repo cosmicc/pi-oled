@@ -13,8 +13,7 @@ def Test_Text():
     image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
     draw = ImageDraw.Draw(image)
     gps = Image.open("gps-green.png")
-    back_im = image.copy()
-    back_im.paste(gps, (0, 20))
+    image.paste(gps, (0, 20))
     font1 = ImageFont.truetype('notomono.ttf', 20)
     font2 = ImageFont.truetype('notomono.ttf', 14)
 
