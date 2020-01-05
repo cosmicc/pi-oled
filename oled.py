@@ -12,7 +12,7 @@ from PIL import Image, ImageColor, ImageDraw, ImageFont
 def Test_Text():
     image = Image.new("RGB", (OLED.SSD1351_WIDTH, OLED.SSD1351_HEIGHT), "BLACK")
     draw = ImageDraw.Draw(image)
-    gps = Image.open("gps-green.jpg")
+    gps = Image.open("gps-green.png")
     image.paste(gps, (20, 20))
     font1 = ImageFont.truetype('notomono.ttf', 20)
     font2 = ImageFont.truetype('notomono.ttf', 14)
