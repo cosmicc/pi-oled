@@ -74,8 +74,8 @@ def main():
                 eip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
             except:
                 eip = "No Address"
-            draw.text((0, 117), text=f"wlan: {wip}", font=noto12, fill="orange")
-            draw.text((0, 105), text=f"eth: {eip}", font=noto12, fill="orange")
+            draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
+            draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
 
 
             draw.text((30, 0), text="\uf017", font=far, fill="green")
