@@ -4,13 +4,38 @@ import OLED_Driver as OLED
 import RPi.GPIO as GPIO
 from PIL import Image, ImageColor, ImageDraw, ImageFont
 from time import sleep
+import netifaces as ni
+from datetime import datetime
 
-gpsgreen = Image.open("gps-green.jpg")
-gpsyellow = Image.open("gps-yellow.jpg")
-gpsred = Image.open("gps-red.jpg")
-tempgreen = Image.open("temp-green.jpg")
+gpsgreen = Image.open("/opt/pi-oled/gps-green.jpg")
+gpsyellow = Image.open("/opt/pi-oled/gps-yellow.jpg")
+gpsred = Image.open("/opt/pi-oled/gps-red.jpg")
+tempgreen = Image.open("/opt/pi-oled/temp-green.jpg")
+fangreen = Image.open("/opt/pi-oled/fan-green.jpg")
+hotspotgreen = Image.open("/opt/pi-oled/hotspot-green.jpg")
+hotspotgrey = Image.open("/opt/pi-oled/hotspot-grey.jpg")
+timegreen = Image.open("/opt/pi-oled/time-grey.jpg")
 
-font1 = ImageFont.truetype('notomono.ttf', 16)
+font20 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 20)
+font16 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 16)
+font14 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 14)
+font11 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 11)
+font12 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 12)
+font8 = ImageFont.truetype('/opt/pi-oled/notomono.ttf', 9)
+
+def getips():
+    try:
+        wip = ni.ifaddresses('wlan1')[ni.AF_INET][0]['addr']
+    except:
+        wip = "No Address"
+    try:
+        eip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+    except:
+        eip = "No Address"
+    draw.text((0, 116), f'wlan: {wip}', fill="YELLOW", font=font11)
+    draw.text((0, 102), f'eth: {eip}', fill="YELLOW", font=font11)
+    OLED.Display_Image(image)
+
 
 def gps_status():
     print('running gps_status')
@@ -27,14 +52,15 @@ def gps_status():
                     image.paste(gpsyellow, (5, 0))
                     OLED.Display_Image(image)
                 elif gpsfix == '2D Fix' or gpsfix == '3D Fix':
-                    image.paste(gpsgreen, (5, 0))
+                    image.paste(timegreen, (5, 0))
                     OLED.Display_Image(image)
                 else:
                     image.paste(gpsred, (5, 0))
                     OLED.Display_Image(image)
             elif gpssplit[0] == 'maiden':
                 gpsmaiden = gpssplit[1]
-                draw.text((5, 30), gpsmaiden, fill="WHITE", font=font1)                
+                draw.text((5, 50), gpsmaiden, fill="GREEN", font=font14)
+                OLED.Display_Image(image)                
             else:
                  pass
             gpsdata = gpsfile.readline()
@@ -70,7 +96,13 @@ draw = ImageDraw.Draw(image)
 # Test_Text()
 try:
     gps_status()
-    image.paste(tempgreen, (40, 40))
+    image.paste(tempgreen, (115, 0))
+    image.paste(fangreen, (80, 2))
+    image.paste(hotspotgrey, (45, 2))
+    draw.text((0, 85), f'Hotspot Clients: 4', fill="CYAN", font=font12)
+    draw.text((0, 26), f' {datetime.now().strftime("%H:%M:%S")}', fill="WHITE", font=font20)
+    OLED.Display_Image(image)
+    getips()
     print('sleeping')
     sleep(60) 
 except:
