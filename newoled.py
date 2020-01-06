@@ -59,6 +59,15 @@ def main():
                         else:
                             fcolor = "grey"
                         draw.text((0, 0), text="\uf3c5", font=fas, fill=fcolor)
+                    elif gpssplit[0] == 'timesource':
+                        timesource = gpssplit[1]
+                        if timesource == 'PPS':
+                            fcolor = "green"
+                        elif timesource == "NIST" or timesource == "GPS":
+                            fcolor = "yellow"
+                        else:
+                            fcolor = "dimgray"
+                        draw.text((32, 0), text="\uf017", font=far, fill=fcolor)
                     elif gpssplit[0] == 'maiden':
                         gpsmaiden = gpssplit[1]
                         draw.text((0, 50), text=f"  {gpsmaiden}", font=noto16, fill="yellow")
@@ -68,7 +77,7 @@ def main():
             # HOTSPOT DATA
             with open("/dev/shm/hotspot") as hsfile:
                 hsdata = hsfile.readline()
-            if hsdata:
+            if hsdata == "True":
                 fcolor = "green"
             else:
                 fcolor = "grey"
@@ -96,7 +105,7 @@ def main():
             draw.text((110, 0), text="\uf2ca", font=fas, fill=fcolor)
 
 
-            draw.text((32, 0), text="\uf017", font=far, fill="dimgray")
+
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         sleep(1)
 
