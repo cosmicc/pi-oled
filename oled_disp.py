@@ -90,6 +90,7 @@ def main():
             log.debug('Reading HOTSPOT data file')
             with open(str(hs_file)) as hsfile:
                 hsdata = hsfile.readline()
+            log.debug('Reading NET data file')
             with open(str(net_file)) as netfile:
                 netdata = netfile.readline()
                 while netdata:
