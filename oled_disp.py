@@ -2,6 +2,7 @@
 
 import os
 from datetime import datetime
+from pathlib import Path
 from time import sleep
 
 import netifaces as ni
@@ -9,7 +10,6 @@ from loguru import logger as log
 from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
-from pathlib import Path
 
 
 def main():
@@ -31,6 +31,7 @@ def main():
 
     while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not temp_file.exists():
         sleep(1)
+    log.debug('File checks passed. continuing...')
 
     def get_display():
         parser = cmdline.create_parser(description='luma.examples arguments')
@@ -50,11 +51,13 @@ def main():
             return device
 
     device = get_display()
+    log.debug('Starting main loop')
     while True:
         with canvas(device) as draw:
             # GPS DATA
             with open(str(gps_file)) as gpsfile:
                 gpsdata = gpsfile.readline()
+                log.debug('Reading GPS data file')
                 while gpsdata:
                     gpssplit = gpsdata.strip('\n').split('=')
                     if gpssplit[0] == 'fix':
@@ -84,6 +87,7 @@ def main():
                         pass
                     gpsdata = gpsfile.readline()
             # HOTSPOT DATA
+            log.debug('Reading HOTSPOT data file')
             with open(str(hs_file)) as hsfile:
                 hsdata = hsfile.readline()
             with open(str(net_file)) as netfile:
@@ -108,6 +112,7 @@ def main():
                 fcolor = "yellow"
             draw.text((68, 0), text="\uf1eb", font=fas, fill=fcolor)
             # IP DATA
+            log.debug('Reading IP data')
             try:
                 wip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
             except:
@@ -119,6 +124,7 @@ def main():
             draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
             draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
             # TEMP DATA
+            log.debug('Reading Temperature data file')
             with open(str(tmp_file)) as tempfile:
                 tempdata = float(tempfile.readline())
             if tempdata < 60:
@@ -129,7 +135,9 @@ def main():
                 fcolor = "yellow"
             draw.text((110, 0), text="\uf2ca", font=fas, fill=fcolor)
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
+        log.debug('Sleep wait')
         sleep(1)
+
 
 
 if __name__ == "__main__":
