@@ -113,6 +113,7 @@ def main():
                         log.debug('signal set')
                     else:
                         pass
+                    netdata = netfile.readline()
             log.debug('finished netdata')
             if hsdata == "True":
                 fcolor = "blue"
