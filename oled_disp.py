@@ -111,6 +111,8 @@ def main():
                     elif netsplit[0] == 'signal_percent':
                         signal = netsplit[1]
                         log.debug('signal set')
+                    else:
+                        pass
             log.debug('finished netdata')
             if hsdata == "True":
                 fcolor = "blue"
