@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 netifaces = "*"
-"rpi.gpio" = "*"
-pillow = "*"
+"RPi.GPIO" = "*"
+Pillow = "*"
 "luma.oled" = "*"
+python-daemon = "*"
 
 [dev-packages]
 

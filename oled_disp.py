@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 from datetime import datetime
 from time import sleep
@@ -7,6 +9,7 @@ from loguru import logger as log
 from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
+from pathlib import Path
 
 
 def main():
@@ -21,7 +24,13 @@ def main():
     fas = make_font("fa-solid-900.ttf", 25)
     fab = make_font("fa-brands-400.ttf", 25)
     far = make_font("fa-regular-400.ttf", 25)
+    gps_file = Path('/dev/shm/gps')
+    net_file = Path('/dev/shm/network')
+    hs_file = Path('/dev/shm/hotspot')
+    temp_file = Path('/dev/shm/cputemp')
 
+    while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not temp_file.exists():
+        sleep(1)
 
     def get_display():
         parser = cmdline.create_parser(description='luma.examples arguments')
@@ -33,17 +42,18 @@ def main():
             exit(1)
         try:
             device = cmdline.create_device(args)
+            log.info('Display Initilized')
         except error.Error as e:
             parser.error(e)
             exit(1)
         else:
-        return device
+            return device
 
     device = get_display()
     while True:
         with canvas(device) as draw:
             # GPS DATA
-            with open("/dev/shm/gps") as gpsfile:
+            with open(str(gps_file)) as gpsfile:
                 gpsdata = gpsfile.readline()
                 while gpsdata:
                     gpssplit = gpsdata.strip('\n').split('=')
@@ -74,16 +84,32 @@ def main():
                         pass
                     gpsdata = gpsfile.readline()
             # HOTSPOT DATA
-            with open("/dev/shm/hotspot") as hsfile:
+            with open(str(hs_file)) as hsfile:
                 hsdata = hsfile.readline()
+            with open(str(net_file)) as netfile:
+                netdata = netfile.readline()
+                while netdata:
+                    netsplit = netdata.strip('\n').split('=')
+                    if netsplit[0] == 'internet':
+                        internet = netsplit[1]
+                    elif netsplit[0] == 'bitrate':
+                        bitrate = netsplit[1]
+                    elif netsplit[0] == 'band':
+                        band = netsplit[1]
+                    elif netsplit[0] == 'quality':
+                        quality = netsplit[1]
+                    elif netsplit[0] == 'signal_percent':
+                        signal = netsplit[1]
             if hsdata == "True":
+                fcolor = "blue"
+            elif internet == "True":
                 fcolor = "green"
             else:
-                fcolor = "grey"
+                fcolor = "yellow"
             draw.text((68, 0), text="\uf1eb", font=fas, fill=fcolor)
             # IP DATA
             try:
-                wip = ni.ifaddresses('wlan1')[ni.AF_INET][0]['addr']
+                wip = ni.ifaddresses('wlan0')[ni.AF_INET][0]['addr']
             except:
                 wip = "No Address"
             try:
@@ -93,7 +119,7 @@ def main():
             draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
             draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
             # TEMP DATA
-            with open("/dev/shm/cputemp") as tempfile:
+            with open(str(tmp_file)) as tempfile:
                 tempdata = float(tempfile.readline())
             if tempdata < 60:
                 fcolor = "green"
