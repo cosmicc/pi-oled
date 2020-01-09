@@ -93,18 +93,25 @@ def main():
             log.debug('Reading NET data file')
             with open(str(net_file)) as netfile:
                 netdata = netfile.readline()
+                log.debug('readline')
                 while netdata:
                     netsplit = netdata.strip('\n').split('=')
                     if netsplit[0] == 'internet':
                         internet = netsplit[1]
+                        log.debug('internet set')
                     elif netsplit[0] == 'bitrate':
                         bitrate = netsplit[1]
+                        log.debug('bitrate set')
                     elif netsplit[0] == 'band':
                         band = netsplit[1]
+                        log.debug('band set')
                     elif netsplit[0] == 'quality':
                         quality = netsplit[1]
+                        log.debug('quality set')
                     elif netsplit[0] == 'signal_percent':
                         signal = netsplit[1]
+                        log.debug('signal set')
+            log.debug('finished netdata')
             if hsdata == "True":
                 fcolor = "blue"
             elif internet == "True":
