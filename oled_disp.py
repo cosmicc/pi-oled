@@ -29,7 +29,7 @@ def main():
     hs_file = Path('/dev/shm/hotspot')
     tmp_file = Path('/dev/shm/cputemp')
 
-    while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not temp_file.exists():
+    while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not tmp_file.exists():
         sleep(1)
     log.debug('File checks passed. continuing...')
 
@@ -148,7 +148,6 @@ def main():
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
         log.debug('Sleep wait')
         sleep(1)
-
 
 
 if __name__ == "__main__":
