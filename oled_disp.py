@@ -27,7 +27,7 @@ def main():
     gps_file = Path('/dev/shm/gps')
     net_file = Path('/dev/shm/network')
     hs_file = Path('/dev/shm/hotspot')
-    temp_file = Path('/dev/shm/cputemp')
+    tmp_file = Path('/dev/shm/cputemp')
 
     while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not temp_file.exists():
         sleep(1)
