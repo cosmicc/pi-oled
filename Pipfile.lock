@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5437832bfa60e3e23ca23d479b527393d8cf6368ad59fbd5a2199b3c85f83358"
+            "sha256": "4fffbc254f2cbc03d8cab41143e48540a0e689645fedb83cbdd27790ec2babea"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,11 +31,20 @@
             ],
             "version": "==0.12.2"
         },
+        "loguru": {
+            "hashes": [
+                "sha256:6e3e8d865201f5a301a4eb7563f4c9e979d80fbe6f6fa919b3e3a7e095106c7b",
+                "sha256:d5ddf363b7e0e562652f283f74a89bf35601baf16b70f2cd2736a2f8c6638748"
+            ],
+            "index": "pypi",
+            "version": "==0.4.0"
+        },
         "luma.core": {
             "hashes": [
                 "sha256:0cf4726463485f55192ec02637eac1e943e296a83388066836cad9c02f7f3fae",
                 "sha256:864a427de78bcc16758f4f4402a9e61f31cc8857bfae9aba8041159aaec3a491"
             ],
+            "index": "pypi",
             "version": "==1.12.0"
         },
         "luma.oled": {

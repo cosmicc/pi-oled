@@ -9,6 +9,8 @@ netifaces = "*"
 Pillow = "*"
 "luma.oled" = "*"
 python-daemon = "*"
+loguru = "*"
+"luma.core" = "*"
 
 [dev-packages]
 
