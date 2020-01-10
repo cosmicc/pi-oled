@@ -117,8 +117,10 @@ def main():
             log.debug('finished netdata')
             if hsdata == "True":
                 fcolor = "blue"
+                draw.text((0, 50), text="Hotspot Clients: 0", font=noto14, fill="cyan")
             elif internet == "True":
                 fcolor = "green"
+                draw.text((0, 50), text=f"{band} {bitrate} {signal} {quality}", font=noto14, fill="cyan")
             else:
                 fcolor = "yellow"
             draw.text((68, 0), text="\uf1eb", font=fas, fill=fcolor)
