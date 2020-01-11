@@ -82,7 +82,11 @@ def main():
                         draw.text((32, 0), text="\uf017", font=far, fill=fcolor)
                     elif gpssplit[0] == 'maiden':
                         gpsmaiden = gpssplit[1]
-                        draw.text((0, 60), text=f"  {gpsmaiden}", font=noto16, fill="yellow")
+                        if gpsmaiden == "JJ00aa00":
+                            gpsmaiden = "No Maidenhead"
+                        else:
+                            gpsmaiden = "  " + gpsmaiden
+                        draw.text((0, 60), text=f"{gpsmaiden}", font=noto16, fill="yellow")
                     else:
                         pass
                     gpsdata = gpsfile.readline()
@@ -93,34 +97,33 @@ def main():
             log.debug('Reading NET data file')
             with open(str(net_file)) as netfile:
                 netdata = netfile.readline()
-                log.debug('readline')
                 while netdata:
                     netsplit = netdata.strip('\n').split('=')
                     if netsplit[0] == 'internet':
                         internet = netsplit[1]
-                        log.debug('internet set')
                     elif netsplit[0] == 'bitrate':
                         bitrate = netsplit[1]
-                        log.debug('bitrate set')
                     elif netsplit[0] == 'band':
                         band = netsplit[1]
-                        log.debug('band set')
                     elif netsplit[0] == 'quality':
                         quality = netsplit[1]
-                        log.debug('quality set')
                     elif netsplit[0] == 'signal_percent':
                         signal = netsplit[1]
-                        log.debug('signal set')
+                        if len(signal) == 2:
+                           signal = f'  {signal}'
+                        elif len(signal) == 1:
+                           signal = f'   {signal}'
+                        elif len(signal) == 3:
+                           signal = f' {signal}'
                     else:
                         pass
                     netdata = netfile.readline()
-            log.debug('finished netdata')
             if hsdata == "True":
                 fcolor = "blue"
-                draw.text((0, 50), text="Hotspot Clients: 0", font=noto14, fill="cyan")
+                draw.text((0, 85), text="Hotspot Clients: 0", font=noto14, fill="cyan")
             elif internet == "True":
                 fcolor = "green"
-                draw.text((0, 50), text=f"{band} {bitrate} {signal} {quality}", font=noto14, fill="cyan")
+                draw.text((0, 85), text=f"{band}{signal}%  {bitrate}", font=noto14, fill="cyan")
             else:
                 fcolor = "yellow"
             draw.text((68, 0), text="\uf1eb", font=fas, fill=fcolor)
@@ -135,7 +138,7 @@ def main():
             except:
                 eip = "No Address"
             draw.text((0, 116), text=f"wlan: {wip}", font=noto12, fill="orange")
-            draw.text((0, 104), text=f"eth: {eip}", font=noto12, fill="orange")
+            draw.text((0, 101), text=f"eth: {eip}", font=noto12, fill="orange")
             # TEMP DATA
             log.debug('Reading Temperature data file')
             with open(str(tmp_file)) as tempfile:
