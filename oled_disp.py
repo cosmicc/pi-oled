@@ -28,6 +28,7 @@ def main():
     net_file = Path('/dev/shm/network')
     hs_file = Path('/dev/shm/hotspot')
     tmp_file = Path('/dev/shm/cputemp')
+    throttle_file = Path('/dev/shm/throttle')
 
     while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not tmp_file.exists():
         sleep(1)
@@ -86,7 +87,7 @@ def main():
                             gpsmaiden = "No Maidenhead"
                         else:
                             gpsmaiden = "  " + gpsmaiden
-                        draw.text((0, 60), text=f"{gpsmaiden}", font=noto16, fill="yellow")
+                        draw.text((0, 65), text=f"{gpsmaiden}", font=noto16, fill="yellow")
                     else:
                         pass
                     gpsdata = gpsfile.readline()
@@ -151,6 +152,19 @@ def main():
                 fcolor = "yellow"
             draw.text((110, 0), text="\uf2ca", font=fas, fill=fcolor)
             draw.text((0, 27), text=f" {datetime.now().strftime('%H:%M:%S')}", font=noto20, fill="white")
+            # UNDERVOLT & OVERTEMP ALARM
+            log.debug('Reading undervolt and overtemp data file')
+            with open(str(throttle_file)) as throttlefile:
+                throttledata = throttlefile.readline()
+                while throttledata:
+                    tsplit = throttledata.strip('\n').split('=')
+                        if tsplit[0] == 'undervolt_hist':
+                            undervolt = tsplit[1]
+                        elif tsplit[0] == 'throttle_hist':
+                            throttle = tsplit[1]
+                    throttledata = throttlefile.readline()
+            if undervolt == 'False':
+                draw.text((0, 45), text="\uf0c7", font=fas, fill="red")
         log.debug('Sleep wait')
         sleep(1)
 
