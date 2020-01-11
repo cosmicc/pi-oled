@@ -22,6 +22,7 @@ def main():
     noto16 = make_font("notomono.ttf", 16)
     noto20 = make_font("notomono.ttf", 20)
     fas = make_font("fa-solid-900.ttf", 25)
+    fas2 = make_font("fa-solid-900.ttf",18)
     fab = make_font("fa-brands-400.ttf", 25)
     far = make_font("fa-regular-400.ttf", 25)
     gps_file = Path('/dev/shm/gps')
@@ -143,7 +144,7 @@ def main():
             # TEMP DATA
             log.debug('Reading Temperature data file')
             with open(str(tmp_file)) as tempfile:
-                tempdata = float(tempfile.readline())
+                tempdata = int(tempfile.readline())
             if tempdata < 60:
                 fcolor = "green"
             elif tempdata > 70:
@@ -158,13 +159,15 @@ def main():
                 throttledata = throttlefile.readline()
                 while throttledata:
                     tsplit = throttledata.strip('\n').split('=')
-                        if tsplit[0] == 'undervolt_hist':
-                            undervolt = tsplit[1]
-                        elif tsplit[0] == 'throttle_hist':
-                            throttle = tsplit[1]
+                    if tsplit[0] == 'undervolt_hist':
+                        undervolt = tsplit[1]
+                    elif tsplit[0] == 'throttle_hist':
+                        throttle = tsplit[1]
                     throttledata = throttlefile.readline()
             if undervolt == 'False':
-                draw.text((0, 45), text="\uf0c7", font=fas, fill="red")
+                draw.text((0, 30), text="\uf0e7", font=fas2, fill="red")
+            if throttle == "False":
+                draw.text((110, 30), text="\uf2db", font=fas2, fill="red")
         log.debug('Sleep wait')
         sleep(1)
 
