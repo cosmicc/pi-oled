@@ -82,7 +82,7 @@ def main():
                         draw.text((32, 0), text="\uf017", font=far, fill=fcolor)
                     elif gpssplit[0] == 'maiden':
                         gpsmaiden = gpssplit[1]
-                        draw.text((0, 50), text=f"  {gpsmaiden}", font=noto16, fill="yellow")
+                        draw.text((0, 60), text=f"  {gpsmaiden}", font=noto16, fill="yellow")
                     else:
                         pass
                     gpsdata = gpsfile.readline()
