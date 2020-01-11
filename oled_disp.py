@@ -167,7 +167,7 @@ def main():
             if undervolt == 'False':
                 draw.text((0, 30), text="\uf0e7", font=fas2, fill="red")
             if throttle == "False":
-                draw.text((110, 30), text="\uf2db", font=fas2, fill="red")
+                draw.text((111, 28), text="\uf2db", font=fas2, fill="red")
         log.debug('Sleep wait')
         sleep(1)
 
