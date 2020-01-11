@@ -164,9 +164,9 @@ def main():
                     elif tsplit[0] == 'throttle_hist':
                         throttle = tsplit[1]
                     throttledata = throttlefile.readline()
-            if undervolt == 'False':
+            if undervolt == 'True':
                 draw.text((0, 30), text="\uf0e7", font=fas2, fill="red")
-            if throttle == "False":
+            if throttle == "True":
                 draw.text((111, 28), text="\uf2db", font=fas2, fill="red")
         log.debug('Sleep wait')
         sleep(1)
