@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.8
 
 import os
 from datetime import datetime
@@ -36,7 +36,7 @@ def main():
     log.debug('File checks passed. continuing...')
 
     def get_display():
-        parser = cmdline.create_parser(description='luma.examples arguments')
+        parser = cmdline.create_parser(description='radiopi')
         try:
             config = cmdline.load_config('/etc/oled.conf')
             args = parser.parse_args(config)
