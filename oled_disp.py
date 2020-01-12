@@ -14,7 +14,7 @@ from PIL import ImageFont
 
 log.remove() # Comment out to get logs
 
-DISPLAY_TIMEOUT = 60
+DISPLAY_TIMEOUT = 300
 display_on = True
 starttime = time.time()
 
