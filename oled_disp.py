@@ -30,6 +30,7 @@ def main():
     hs_file = Path('/dev/shm/hotspot')
     tmp_file = Path('/dev/shm/cputemp')
     throttle_file = Path('/dev/shm/throttle')
+    tz_file = Path('/etc/timezone')
 
     while not gps_file.exists() or not net_file.exists() or not hs_file.exists() or not tmp_file.exists():
         sleep(1)
@@ -92,6 +93,10 @@ def main():
                     else:
                         pass
                     gpsdata = gpsfile.readline()
+            # TIMEZONE DATA
+            with open(str(tz_file)) as tzfile:
+                tzdata = tzfile.readline()
+            draw.text((0, 50), text=f"{tzdata.strip()}", font=noto14, fill="blue")
             # HOTSPOT DATA
             log.debug('Reading HOTSPOT data file')
             with open(str(hs_file)) as hsfile:
