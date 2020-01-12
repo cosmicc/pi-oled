@@ -27,7 +27,7 @@ def main():
 
     def button_press(input_pin):
         print('button press!')
-        time.sleep(5)
+        sleep(5)
 
     GPIO.add_event_detect(21, GPIO.RISING, callback=button_press)
 
