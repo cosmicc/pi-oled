@@ -11,6 +11,7 @@ from luma.core import cmdline, error
 from luma.core.render import canvas
 from PIL import ImageFont
 
+log.remove() # Comment out to get logs
 
 def main():
     def make_font(name, size):
