@@ -14,9 +14,15 @@ from PIL import ImageFont
 
 log.remove() # Comment out to get logs
 
+DISPLAY_TIMEOUT = 60
+display_on = True
+starttime = time.time()
 
 def main():
+    global display_on
+    global starttime
     display_on = True
+    starttime = time.time()
     def make_font(name, size):
         font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
         return ImageFont.truetype(font_path, size)
@@ -27,10 +33,13 @@ def main():
     # GPIO.wait_for_edge(21, GPIO.RISING)
 
     def button_press(input_pin):
-        print('button press!')
+        global display_on
+        global starttime
+        log.debug('button press')
+        device.show()
         display_on = True
         starttime = time.time()
-        time.sleep(5)
+        time.sleep(.2)
 
     GPIO.add_event_detect(21, GPIO.RISING, callback=button_press)
 
@@ -73,8 +82,8 @@ def main():
     device = get_display()
     log.debug('Starting main loop')
     while True:
-        if time.time() - starttime > 60:
-            display_off = False
+        if time.time() - starttime > DISPLAY_TIMEOUT:
+            display_on = False
         if display_on:
             with canvas(device) as draw:
                 # GPS DATA
@@ -169,7 +178,7 @@ def main():
                 # TEMP DATA
                 log.debug('Reading Temperature data file')
                 with open(str(tmp_file)) as tempfile:
-                    tempdata = int(tempfile.readline())
+                    tempdata = int(tempfile.readline().strip())
                 if tempdata < 60:
                     fcolor = "green"
                 elif tempdata > 70:
@@ -194,9 +203,9 @@ def main():
                 if throttle == "True":
                     draw.text((111, 28), text="\uf2db", font=fas2, fill="red")
         else:
-            device.cleanup()
+            device.hide()
         log.debug('Sleep wait')
-        time.sleep(1)
+        time.sleep(.5)
 
 
 if __name__ == "__main__":
