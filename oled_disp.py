@@ -6,6 +6,7 @@ from pathlib import Path
 from time import sleep
 
 import netifaces as ni
+import RPi.GPIO as GPIO
 from loguru import logger as log
 from luma.core import cmdline, error
 from luma.core.render import canvas
@@ -13,10 +14,22 @@ from PIL import ImageFont
 
 log.remove() # Comment out to get logs
 
+
 def main():
     def make_font(name, size):
         font_path = os.path.abspath(os.path.join(os.path.dirname('/opt/pi-oled/'), 'fonts', name))
         return ImageFont.truetype(font_path, size)
+
+    GPIO.setmode(GPIO.BCM)
+
+    GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    # GPIO.wait_for_edge(21, GPIO.RISING)
+
+    def button_press(input_pin):
+        print('button press!')
+        time.sleep(5)
+
+    GPIO.add_event_detect(21, GPIO.RISING, callback=button_press)
 
     noto12 = make_font("notomono.ttf", 12)
     noto14 = make_font("notomono.ttf", 14)
