@@ -119,8 +119,6 @@ def main():
                             else:
                                 gpsmaiden = "  " + gpsmaiden
                             draw.text((0, 65), text=f"{gpsmaiden}", font=noto16, fill="yellow")
-                        else:
-                            pass
                         gpsdata = gpsfile.readline()
                 # TIMEZONE DATA
                 with open(str(tz_file)) as tzfile:
